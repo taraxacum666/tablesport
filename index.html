@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test table</title>
+	<script src="js/jquery-3.2.1.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="resTbl">
+		
+	</div>
+	<p><b>М</b> - матчи, <b>В</b> - выигрыши, <b>Н</b> - ничьи, <b>П</b> - проигрыши, <b>Заб</b> - забитые голы, <b>Проп</b> - пропущенные голы, <b>О</b> - очки в турнире</p>
+<script>
+	$.ajax({
+		url:'data/seriea.json',
+		type: 'POST',
+		dataType:'json',
+		success: function(data){
+			var tbl = "<table border=1>";
+			tbl += '<tr><th></th><th>Команда</th><th>М</th><th>В</th><th>Н</th><th>П</th><th>Заб</th><th>Проп</th><th>О</th></tr>';
+			for (var i = 0; i < data.teams.length; i++) {
+				tbl +='<tr>';
+				tbl += '<td>' + data.teams[i].place + '</td>';
+				tbl += '<td>' + '<img src ="img/flag.png" alt='+data.teams[i].flag_country+'>' +'<a href="' + data.teams[i].tag_url + '">' + data.teams[i].name + '</a>' + '</td>';
+				tbl += '<td>' + data.teams[i].matches + '</td>';
+				tbl += '<td>' + data.teams[i].win + '</td>';
+				tbl += '<td>' + data.teams[i].draw + '</td>';
+				tbl += '<td>' + data.teams[i].lose + '</td>';
+				tbl += '<td>' + data.teams[i].goals + '</td>';
+				tbl += '<td>' + data.teams[i].conceded_goals + '</td>';
+				tbl += '<td>' + data.teams[i].score + '</td>';
+				tbl += '</tr>';
+			}
+			tbl += "</table>";
+			$(".resTbl").html(tbl);
+			
+		}
+	});
+</script>
+</body>
+</html>
+
